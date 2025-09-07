@@ -50,14 +50,15 @@ NEXT_TELEMETRY_DISABLED=1
 
 ### 4. Health Check Configuration
 
-The application includes a health check endpoint at `/api/health` that Coolify can use for monitoring:
+The application includes a built-in Docker healthcheck that Coolify will automatically detect:
 
-- **Health Check Path**: `/api/health`
+- **Health Check Endpoint**: `/api/health`
 - **Health Check Interval**: 30s
 - **Health Check Timeout**: 10s
 - **Health Check Retries**: 3
+- **Start Period**: 40s (allows app time to start up)
 
-**Important**: Ensure health checks are properly configured to avoid issues with rolling updates. The health check endpoint should return HTTP 200 when the container is operational. If health checks fail, Traefik proxy may not function correctly.
+**Important**: The healthcheck is now built into the Docker image, so Coolify will automatically use it. No additional configuration needed in Coolify UI. If health checks fail, Traefik proxy may not function correctly.
 
 ### 5. Build from Source (Alternative)
 
