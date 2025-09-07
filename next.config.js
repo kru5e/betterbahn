@@ -13,7 +13,7 @@ module.exports = {
 			'db-vendo-client',
 			'zod'
 		],
-		// Enable Turbopack persistent caching for faster subsequent builds
-		turbopackPersistentCaching: true,
+		// Note: turbopackPersistentCaching is only available in canary versions
+		// Remove this line for stable Next.js versions
 	}
 };
