@@ -32,9 +32,5 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
-# Healthcheck for Coolify
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD curl -f http://localhost:4000/ || exit 1
-
 # Start Next.js
 CMD ["node", "server.js"]
