@@ -25,6 +25,7 @@ WORKDIR /app
 RUN apk add --no-cache curl
 ENV NODE_ENV=production
 ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
 EXPOSE 3000
 
 # Copy artifacts
@@ -32,9 +33,9 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
-# Add healthcheck for Coolify
+# Add healthcheck for Coolify - simplified for debugging
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=5 \
-    CMD curl -f http://localhost:3000/api/health || exit 1
+    CMD curl -f http://localhost:3000/ || exit 1
 
-# Start Next.js
+# Start Next.js with explicit hostname binding
 CMD ["node", "server.js"]

@@ -52,13 +52,19 @@ NEXT_TELEMETRY_DISABLED=1
 
 The application includes a built-in Docker healthcheck that Coolify will automatically detect:
 
-- **Health Check Endpoint**: `/api/health`
+- **Health Check Endpoint**: `/` (root path for basic connectivity test)
 - **Health Check Interval**: 30s
 - **Health Check Timeout**: 10s
-- **Health Check Retries**: 3
-- **Start Period**: 40s (allows app time to start up)
+- **Health Check Retries**: 5 (increased for reliability)
+- **Start Period**: 60s (allows app time to start up)
 
-**Important**: The healthcheck is now built into the Docker image, so Coolify will automatically use it. No additional configuration needed in Coolify UI. If health checks fail, Traefik proxy may not function correctly.
+**Important**:
+
+- The healthcheck is built directly into the Docker image
+- Uses root endpoint for maximum reliability
+- Includes `HOSTNAME=0.0.0.0` environment variable to ensure Next.js binds to all interfaces
+- Coolify will automatically detect and use it. No manual configuration needed in Coolify UI
+- If health checks fail, Traefik proxy may not function correctly
 
 ### 5. Build from Source (Alternative)
 
@@ -132,9 +138,11 @@ To update the application:
    - Ensure DNS records are pointing to Cloudflare
 
 3. **Health check failures**
+   - Application takes 60+ seconds to start (increased start period to handle this)
+   - Next.js not binding to all interfaces (fixed with `HOSTNAME=0.0.0.0`)
    - Check if the application is responding on port 3000
-   - Verify the `/api/health` endpoint is accessible
-   - Review application logs for errors
+   - Verify the root `/` endpoint is accessible (simplified health check)
+   - Review application logs for startup errors
 
 ### Useful Commands
 
