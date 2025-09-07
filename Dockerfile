@@ -24,8 +24,8 @@ WORKDIR /app
 # Install curl for Coolify healthcheck
 RUN apk add --no-cache curl
 ENV NODE_ENV=production
-ENV PORT=3000
-EXPOSE 3000
+ENV PORT=4000
+EXPOSE 4000
 
 # Copy artifacts
 COPY --from=builder /app/public ./public
